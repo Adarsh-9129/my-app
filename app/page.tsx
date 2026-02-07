@@ -1,65 +1,427 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+const slides = [
+  "https://educationsnapshots.com/wp-content/uploads/sites/4/2018/11/campus-international-school-cleveland-5.jpg",
+  "https://spaces4learning.com/-/media/EDU/SPM/Images/2019/10/SportsFacilities01x640.jpg",
+  "https://www.ipsbhopal.com/Campus/images/IPS-academics1f.jpg",
+];
 
 export default function Home() {
+  const [active, setActive] = useState(0);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  useEffect(() => {
+    const i = setInterval(() => {
+      setActive((p) => (p + 1) % slides.length);
+    }, 4500);
+
+    return () => clearInterval(i);
+  }, []);
+
+  const toggleDropdown = (dropdown: string) => {
+    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="bg-[#f8fafc] text-slate-800 overflow-x-hidden">
+
+      {/* NAVBAR */}
+      <header className="fixed top-0 w-full z-50 backdrop-blur-xl bg-white/70 border-b shadow-sm">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+
+          {/* Logo */}
+          <h1 className="font-extrabold tracking-wide text-xl text-indigo-700">
+            MAA URMILA IPS
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+          <nav className="hidden md:flex items-center gap-8 font-medium">
+
+            {/* Home */}
+            <Link href="/" className="hover:text-indigo-600 transition">
+              Home
+            </Link>
+
+            {/* MODULES DROPDOWN */}
+<div className="relative">
+
+  <button onClick={() => toggleDropdown("modules")} className="hover:text-indigo-600 transition flex items-center gap-1">
+    Modules ▾
+  </button>
+
+  <div
+    className={`absolute left-[-150px] top-10 bg-white shadow-xl rounded-xl p-6 w-[400px] gap-10 border ${
+      openDropdown === "modules" ? "flex" : "hidden"
+    }`}
+  >
+
+    {/* Column 1 */}
+    <div className="space-y-3 text-sm">
+
+      <a href="/academics" className="block hover:text-indigo-600">
+        Academics
+      </a>
+
+      <a href="/sports" className="block hover:text-indigo-600">
+        Sports
+      </a>
+
+      <a href="/library" className="block hover:text-indigo-600">
+        Library
+      </a>
+
+      <a href="/labs" className="block hover:text-indigo-600">
+        Science Labs
+      </a>
+
     </div>
+
+    {/* Column 2 */}
+    <div className="space-y-3 text-sm">
+
+      <a href="/transport" className="block hover:text-indigo-600">
+        Transport
+      </a>
+
+      <a href="/smart-classes" className="block hover:text-indigo-600">
+        Smart Classes
+      </a>
+
+      <a href="/activities" className="block hover:text-indigo-600">
+        Activities
+      </a>
+
+      <a href="/hostel" className="block hover:text-indigo-600">
+        Hostel
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
+
+            {/* About Dropdown */}
+            <div className="relative">
+
+              <button onClick={() => toggleDropdown("about")} className="hover:text-indigo-600 transition flex items-center gap-1">
+                About ▾
+              </button>
+
+              {/* Dropdown */}
+              <div
+                className={`absolute left-[-200px] top-10 bg-white shadow-xl rounded-xl p-6 w-[500px] gap-12 border ${
+                  openDropdown === "about" ? "flex" : "hidden"
+                }`}
+              >
+
+                {/* Column 1 */}
+                <div className="space-y-3 text-sm">
+                  <Link href="/services" className="block hover:text-indigo-600">
+                    Services
+                  </Link>
+
+                  <Link href="/careers" className="block hover:text-indigo-600">
+                    Careers
+                  </Link>
+
+                  <Link href="/support" className="block hover:text-indigo-600">
+                    Support
+                  </Link>
+
+                  <Link href="/contact" className="block hover:text-indigo-600">
+                    Contact Us
+                  </Link>
+                </div>
+
+                {/* Column 2 */}
+                <div className="space-y-3 text-sm">
+                  <Link href="/work" className="block hover:text-indigo-600">
+                    See Our Work
+                  </Link>
+
+                  <Link href="/testimonials" className="block hover:text-indigo-600">
+                    Testimonials
+                  </Link>
+
+                  <Link href="/blog" className="block hover:text-indigo-600">
+                    Blog
+                  </Link>
+
+                  <Link href="/resources" className="block hover:text-indigo-600">
+                    Top Resources ▶
+                  </Link>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Contact */}
+            <Link href="/contact" className="hover:text-indigo-600 transition">
+              Contact
+            </Link>
+
+            {/* Request a Demo */}
+            <Link href="/demo" className="hover:text-indigo-600 transition">
+              Request a Demo
+            </Link>
+            
+            {/* Apply */}
+            <Link
+              href="/admissions"
+              className="px-6 py-2 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg hover:scale-105 transition"
+            >
+              Apply Now
+            </Link>
+
+          </nav>
+        </div>
+      </header>
+
+      {/* HERO */}
+      <section className="relative h-screen flex items-center justify-center">
+
+        {slides.map((img, i) => (
+          <div
+            key={i}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              i === active ? "opacity-100" : "opacity-0"
+            }`}
+            style={{
+              backgroundImage: `url(${img})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        ))}
+
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-indigo-900/70" />
+
+        <div className="relative z-10 text-center text-white px-6 max-w-3xl">
+
+          <img
+            src="/image/ChatGPT Image Jan 6, 2026, 05_19_20 PM.png"
+            className="mx-auto w-32 drop-shadow-2xl"
+            alt="Logo"
+          />
+
+          <h1 className="mt-6 text-4xl md:text-6xl font-extrabold leading-tight">
+            Shaping <span className="text-sky-400">Future Leaders</span>
+          </h1>
+
+          <p className="mt-6 text-lg text-slate-200">
+            A world-class CBSE institution nurturing excellence, discipline & values
+          </p>
+
+        </div>
+      </section>
+
+
+      {/* STATS */}
+      <section className="relative -mt-24 z-20 max-w-6xl mx-auto px-6">
+
+        <div className="grid grid-cols-2 md:grid-cols-4 bg-white rounded-3xl shadow-xl p-10 text-center">
+
+          {[
+            ["15+", "Years of Excellence"],
+            ["1200+", "Students"],
+            ["80+", "Faculty"],
+            ["100%", "Results"],
+          ].map(([num, txt], i) => (
+
+            <div key={i} className="hover:scale-105 transition">
+
+              <h3 className="text-4xl font-extrabold text-indigo-600">
+                {num}
+              </h3>
+
+              <p className="mt-2 text-slate-600">
+                {txt}
+              </p>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </section>
+
+
+      {/* INTRO */}
+      <section className="relative bg-gradient-to-br from-indigo-700 via-blue-600 to-indigo-900 text-white py-24">
+
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+          <div className="rounded-3xl overflow-hidden shadow-2xl hover:scale-105 transition">
+
+            <img
+              src="https://educationsnapshots.com/wp-content/uploads/sites/4/2018/11/campus-international-school-cleveland-5.jpg"
+              className="w-full h-full object-cover"
+              alt="Campus"
+            />
+
+          </div>
+
+          <div>
+
+            <h2 className="text-4xl font-extrabold leading-tight">
+              Welcome To{" "}
+              <span className="text-sky-300">
+                Maa Urmila International Public School
+              </span>
+            </h2>
+
+            <h3 className="mt-4 text-xl font-semibold text-slate-200">
+              Redefining Education for the 21st Century
+            </h3>
+
+            <p className="mt-6 text-slate-200 leading-relaxed">
+              We deliver quality CBSE education with discipline, values,
+              and modern learning practices.
+            </p>
+
+            <Link
+              href="/about"
+              className="inline-block mt-8 px-8 py-3 rounded-full bg-red-500 hover:bg-red-600 transition font-semibold shadow-lg"
+            >
+              Read More
+            </Link>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* FEATURES */}
+      <section className="py-24 max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
+
+        {[
+          ["🎓", "Academics", "CBSE-based quality education", "/academics"],
+          ["👨‍🏫", "Faculty Info", "Meet our expert teachers", "/faculty-info"],
+          ["⚽", "Sports", "Encouraging physical activity", "/sports"],
+        ].map(([icon, title, desc, link], i) => (
+
+          <Link href={link} key={i}>
+
+            <div className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-indigo-500 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+
+              <div className="text-5xl">
+                {icon}
+              </div>
+
+              <h3 className="mt-6 text-2xl font-bold">
+                {title}
+              </h3>
+
+              <p className="mt-4 text-slate-600">
+                {desc}
+              </p>
+
+            </div>
+
+          </Link>
+
+        ))}
+
+      </section>
+
+
+      {/* TESTIMONIAL */}
+      <section className="bg-gradient-to-r from-indigo-600 to-blue-700 py-24 text-white text-center">
+
+        <h2 className="text-3xl font-bold">
+          What Parents Say
+        </h2>
+
+        <p className="mt-8 italic max-w-xl mx-auto">
+          “A safe, disciplined and inspiring environment for our child.”
+        </p>
+
+      </section>
+
+
+      {/* FOOTER */}
+      <footer className="pt-20 bg-white border-t">
+
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 text-black">
+
+          <div>
+            <h3 className="text-xl font-bold">Maa Urmila IPS</h3>
+
+            <p className="mt-4 text-sm">
+              Lahrpur Road, Vill Patwara, Sitapur, UP
+            </p>
+
+            <p className="mt-4 text-sm">📞 +916307779480</p>
+
+            <p className="text-sm">✉️ info@maa-urmilaips.com</p>
+          </div>
+
+
+          <div>
+            <h4 className="text-lg font-semibold mb-4">
+              Important Links
+            </h4>
+
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/music">Music</Link></li>
+              <li><Link href="/facilities">Facilities</Link></li>
+              <li><Link href="/events">Events</Link></li>
+              <li><Link href="/achievements">Achievements</Link></li>
+              <li><Link href="/activities">Activities</Link></li>
+            </ul>
+          </div>
+
+
+          <div>
+            <h4 className="text-lg font-semibold mb-4">
+              Quick Links
+            </h4>
+
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/cbsc-information">CBSE Information</Link></li>
+              <li><Link href="/apply-now">Apply Now</Link></li>
+              <li><Link href="/results">Results</Link></li>
+              <li><Link href="/child-development">Child Development</Link></li>
+              <li><Link href="/gallery">Gallery</Link></li>
+              <li><Link href="/about">About Us</Link></li>
+            </ul>
+          </div>
+
+
+          <div>
+            <h4 className="text-lg font-semibold mb-4">
+              Newsletter
+            </h4>
+
+            <div className="flex">
+
+              <input
+                placeholder="Type Email"
+                className="px-4 py-2 rounded-l-full border w-full"
+              />
+
+              <button className="bg-yellow-400 px-6 rounded-r-full font-semibold">
+                Subscribe
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+
+
+        <div className="mt-16 border-t py-6 text-center text-sm">
+          © 2026 Maa Urmila International Public School | All Rights Reserved
+        </div>
+
+      </footer>
+
+    </main>
   );
 }
