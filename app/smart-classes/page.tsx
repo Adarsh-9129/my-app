@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function SmartClassesPage() {
   const features = [
@@ -8,25 +9,25 @@ export default function SmartClassesPage() {
       title: "Interactive Learning",
       description:
         "Engage students with live polls, quizzes, and real-time feedback to make learning more interactive.",
-      icon: "/icons/interactive.svg",
+      icon: "/image/interactive.png",
     },
     {
       title: "Digital Whiteboards",
       description:
         "Teachers can illustrate concepts dynamically using digital whiteboards for a better visual understanding.",
-      icon: "/icons/whiteboard.svg",
+      icon: "/image/digital.png",
     },
     {
       title: "Video Lectures",
       description:
         "Access pre-recorded high-quality lectures anytime to reinforce learning outside the classroom.",
-      icon: "/icons/video.svg",
+      icon: "/image/video.png",
     },
     {
       title: "Smart Attendance",
       description:
         "Track student attendance automatically with smart devices and reduce manual effort.",
-      icon: "/icons/attendance.svg",
+      icon: "/image/smart.png",
     },
   ];
 
@@ -52,7 +53,9 @@ export default function SmartClassesPage() {
 
       {/* FEATURES SECTION */}
       <section className="max-w-6xl mx-auto py-24 px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">Our Smart Class Features</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Our Smart Class Features
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {features.map((feature, index) => (
             <div
@@ -66,7 +69,9 @@ export default function SmartClassesPage() {
                 height={64}
                 className="mb-4"
               />
-              <h3 className="font-semibold text-xl mb-2">{feature.title}</h3>
+              <h3 className="font-semibold text-xl mb-2">
+                {feature.title}
+              </h3>
               <p className="text-gray-600">{feature.description}</p>
             </div>
           ))}
@@ -83,13 +88,72 @@ export default function SmartClassesPage() {
         </p>
         <div className="max-w-4xl mx-auto relative">
           <Image
-           src="/public/images/smart-classroom.jpg"
-
+            src="/image/smartclass.jpg"
             alt="Smart Classroom"
             width={1200}
             height={600}
             className="rounded-xl shadow-xl"
           />
+        </div>
+      </section>
+
+      {/* BENEFITS SECTION */}
+      <section className="max-w-6xl mx-auto py-24 px-6">
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Why Choose Smart Classes?
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-8 rounded-2xl shadow-md text-center">
+            <h3 className="text-xl font-semibold mb-3">Better Understanding</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Visual learning tools and digital content help students understand
+              concepts faster and more clearly.
+            </p>
+          </div>
+
+          <div className="bg-white p-8 rounded-2xl shadow-md text-center">
+            <h3 className="text-xl font-semibold mb-3">Higher Engagement</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Interactive lessons motivate students to participate actively in
+              classroom activities.
+            </p>
+          </div>
+
+          <div className="bg-white p-8 rounded-2xl shadow-md text-center">
+            <h3 className="text-xl font-semibold mb-3">Future Ready Skills</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Students develop digital skills that prepare them for higher studies
+              and future careers.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CALL TO ACTION SECTION */}
+      <section className="bg-indigo-700 text-white py-20 px-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          Ready to Experience Smart Learning?
+        </h2>
+        <p className="max-w-2xl mx-auto text-indigo-100 mb-8">
+          Join our school and give your child the advantage of modern,
+          technology-enabled education.
+        </p>
+
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <Link
+            href="/admissions"
+            className="bg-white text-indigo-700 px-7 py-3 rounded-xl font-semibold shadow hover:bg-indigo-50 transition"
+          >
+            Apply Now
+          </Link>
+
+          <Link
+            href="/contact"
+            className="border border-white px-7 py-3 rounded-xl font-semibold hover:bg-white hover:text-indigo-700 transition"
+          >
+            Contact Us
+          </Link>
         </div>
       </section>
     </main>

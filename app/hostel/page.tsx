@@ -69,7 +69,7 @@ export default function HostelPage() {
 
         <div className="rounded-2xl overflow-hidden shadow-xl">
           <Image
-            src="/images/hostel.jpg"
+            src="/image/hostal.png"
             alt="School Hostel"
             width={600}
             height={400}

@@ -1,9 +1,71 @@
-"use client"
+"use client";
+
+import { useState, ChangeEvent, FormEvent } from "react";
+
+interface FormData {
+  fullName: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState<FormData>({
+    fullName: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+
+      setStatus("success");
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error: any) {
+      setStatus("error");
+      setErrorMessage(error.message);
+    }
+  };
+
   return (
     <main className="bg-gradient-to-br from-blue-50 via-white to-emerald-100 text-slate-700">
-
       {/* HERO */}
       <section className="text-center py-24 px-6 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
         <h1 className="text-4xl md:text-6xl font-extrabold drop-shadow-lg">
@@ -21,11 +83,15 @@ export default function ContactPage() {
             ✍️ Send Us a Message
           </h2>
 
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="font-semibold">Full Name</label>
+              <label className="font-semibold" htmlFor="fullName">Full Name</label>
               <input
                 type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
                 placeholder="Your full name"
                 className="w-full mt-2 p-4 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none"
                 required
@@ -33,9 +99,13 @@ export default function ContactPage() {
             </div>
 
             <div>
-              <label className="font-semibold">Email Address</label>
+              <label className="font-semibold" htmlFor="email">Email Address</label>
               <input
                 type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="your@email.com"
                 className="w-full mt-2 p-4 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none"
                 required
@@ -43,18 +113,26 @@ export default function ContactPage() {
             </div>
 
             <div>
-              <label className="font-semibold">Phone Number (Optional)</label>
+              <label className="font-semibold" htmlFor="phone">Phone Number (Optional)</label>
               <input
                 type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 placeholder="+91 XXXXX XXXXX"
                 className="w-full mt-2 p-4 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="font-semibold">Subject</label>
+              <label className="font-semibold" htmlFor="subject">Subject</label>
               <input
                 type="text"
+                id="subject"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
                 placeholder="Admission, Feedback, Query..."
                 className="w-full mt-2 p-4 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none"
                 required
@@ -62,20 +140,38 @@ export default function ContactPage() {
             </div>
 
             <div>
-              <label className="font-semibold">Message</label>
+              <label className="font-semibold" htmlFor="message">Message</label>
               <textarea
+                id="message"
+                name="message"
                 rows={6}
+                value={formData.message}
+                onChange={handleChange}
                 placeholder="Write your message here..."
                 className="w-full mt-2 p-4 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none"
                 required
               />
             </div>
 
+            {status === "error" && (
+              <div className="p-4 bg-red-100 text-red-700 rounded-xl">
+                {errorMessage}
+              </div>
+            )}
+
+            {status === "success" && (
+              <div className="p-4 bg-green-100 text-green-700 rounded-xl">
+                Message sent successfully! We'll get back to you soon.
+              </div>
+            )}
+
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-bold py-4 rounded-xl shadow-xl hover:scale-105 transition"
+              disabled={status === "loading"}
+              className={`w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-bold py-4 rounded-xl shadow-xl hover:scale-105 transition ${status === "loading" ? "opacity-70 cursor-not-allowed" : ""
+                }`}
             >
-              🚀 Send Message
+              {status === "loading" ? "Sending..." : "🚀 Send Message"}
             </button>
           </form>
         </div>
@@ -134,5 +230,5 @@ export default function ContactPage() {
       </footer>
 
     </main>
-  )
+  );
 }

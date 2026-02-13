@@ -1,197 +1,222 @@
-'use client';
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
 
 export default function SportsPage() {
   return (
-    <>
+    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 text-gray-800">
+
       {/* HEADER */}
-      <header className="header">
-        <div>Maa Urmila International Public School</div>
-        <a href="/" className="homeLink">Home</a>
+      <header className="fixed top-0 w-full bg-white shadow z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+          <h1 className="text-xl font-bold text-blue-700">
+            Maa Urmila International Public School
+          </h1>
+
+          <nav className="space-x-6 text-sm font-medium">
+            <Link href="/">Home</Link>
+            <Link href="/about">About</Link>
+            <Link href="/sports" className="text-blue-600 font-semibold">
+              Sports
+            </Link>
+            <Link href="/contact">Contact</Link>
+          </nav>
+
+        </div>
       </header>
 
+
       {/* HERO */}
-      <section className="hero">
-        <h1>Sports & Physical Education</h1>
-        <p>Play • Power • Performance</p>
+      <section className="pt-40 pb-28 text-center px-6 bg-gradient-to-r from-blue-700 to-indigo-700 text-white">
+
+        <h2 className="text-5xl font-bold mb-4">
+          Sports & Physical Education
+        </h2>
+
+        <p className="max-w-3xl mx-auto text-lg text-blue-100">
+          Building strength, discipline, teamwork, and leadership through sports.
+        </p>
+
       </section>
 
-      {/* CONTENT */}
-      <section className="section">
-        <h2 className="title">Our Sports Activities</h2>
 
-        <div className="sportsGrid">
-          <div className="sportBox">
-            <img src="/images/cricket.png" alt="Cricket" />
-            <h3>Cricket</h3>
-            <p>Bat, Ball & Fielding</p>
-          </div>
+      {/* ABOUT SPORTS */}
+      <section className="max-w-7xl mx-auto px-6 py-28 grid md:grid-cols-2 gap-12 items-center">
 
-          <div className="sportBox">
-            <img src="/images/football.png" alt="Football" />
-            <h3>Football</h3>
-            <p>Goal, Passing & Stamina</p>
-          </div>
+        <div>
+          <img
+            src="image/sports.png"
+            alt="Sports Ground"
+            className="rounded-2xl shadow-xl w-full"
+          />
 
-          <div className="sportBox">
-            <img src="/images/basketball.png" alt="Basketball" />
-            <h3>Basketball</h3>
-            <p>Hoop & Dribbling</p>
-          </div>
 
-          <div className="sportBox">
-            <img src="/images/batmintan.png" alt="Badminton" />
-            <h3>Badminton</h3>
-            <p>Racket & Shuttle Control</p>
-          </div>
-
-          <div className="sportBox">
-            <img
-              src="https://png.pngtree.com/png-vector/20250731/ourmid/pngtree-blue-yellow-and-white-volleyball-ball-png-image_16798436.webp"
-              alt="Volleyball"
-            />
-            <h3>Volleyball</h3>
-            <p>Net Play & Teamwork</p>
-          </div>
-
-          <div className="sportBox">
-            <img src="/images/Athletics.jpg" alt="Athletics" />
-            <h3>Athletics</h3>
-            <p>Running & Fitness</p>
-          </div>
-
-          <div className="sportBox">
-            <img src="/images/yoga.png" alt="Yoga" />
-            <h3>Yoga</h3>
-            <p>Balance & Mindfulness</p>
-          </div>
-
-          <div className="sportBox">
-            <img src="/images/indoor.png" alt="Indoor Games" />
-            <h3>Indoor Games</h3>
-            <p>Chess, Carrom & TT</p>
-          </div>
         </div>
+
+        <div>
+
+          <h3 className="text-3xl font-bold text-blue-700 mb-4">
+            Excellence in Sports
+          </h3>
+
+          <p className="text-gray-600 leading-relaxed mb-5">
+            Our school provides world-class sports facilities
+            to promote physical fitness and mental wellness.
+          </p>
+
+          <p className="text-gray-600 leading-relaxed">
+            Students are trained by certified coaches and
+            encouraged to participate in district, state,
+            and national level tournaments.
+          </p>
+
+        </div>
+
       </section>
 
-     
+
+      {/* SPORTS FACILITIES */}
+      <section className="bg-blue-50 py-28">
+
+        <div className="max-w-7xl mx-auto px-6">
+
+          <h2 className="text-4xl font-bold text-center text-blue-700 mb-16">
+            Sports Facilities
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8">
+
+            {[
+              "Cricket Ground",
+              "Football Field",
+              "Basketball Court",
+              "Badminton Court",
+              "Indoor Games",
+              "Yoga & Fitness Center",
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition"
+              >
+
+                <h3 className="text-lg font-semibold mb-2">
+                  {item}
+                </h3>
+
+                <p className="text-gray-600 text-sm">
+                  Well-maintained and safe environment for students.
+                </p>
+
+              </div>
+            ))}
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* ACHIEVEMENTS */}
+      <section className="max-w-7xl mx-auto px-6 py-28">
+
+        <h2 className="text-4xl font-bold text-center text-blue-700 mb-16">
+          Sports Achievements
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-8">
+
+          {[
+            "District Level Champions",
+            "State Level Participation",
+            "Inter-School Tournaments",
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="bg-white p-6 rounded-xl shadow-md text-center"
+            >
+
+              <h3 className="font-semibold mb-2">{item}</h3>
+
+              <p className="text-gray-600 text-sm">
+                Recognizing dedication and performance.
+              </p>
+
+            </div>
+          ))}
+
+        </div>
+
+      </section>
+
+
+      {/* COACHES */}
+      <section className="bg-gray-100 py-28 px-6">
+
+        <h2 className="text-4xl font-bold text-center text-blue-700 mb-16">
+          Our Coaches
+        </h2>
+
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+
+          {[
+            "Mr. Rajesh Kumar",
+            "Ms. Neha Singh",
+            "Mr. Amit Verma",
+          ].map((name, i) => (
+            <div
+              key={i}
+              className="bg-white p-8 rounded-xl shadow-md text-center"
+            >
+
+              <div className="w-24 h-24 mx-auto bg-blue-100 rounded-full mb-4" />
+
+              <h3 className="font-semibold text-lg">{name}</h3>
+
+              <p className="text-gray-600 text-sm">
+                Certified Sports Coach
+              </p>
+
+            </div>
+          ))}
+
+        </div>
+
+      </section>
+
+
+      {/* CTA */}
+      <section className="py-28 text-center bg-blue-700 text-white px-6">
+
+        <h2 className="text-4xl font-bold mb-4">
+          Join Our Sports Program
+        </h2>
+
+        <p className="max-w-2xl mx-auto text-blue-100 mb-8">
+          Enroll your child in our sports programs
+          and help them develop lifelong fitness habits.
+        </p>
+
+        <Link
+          href="/admission"
+          className="bg-white text-blue-700 px-10 py-3 rounded-full font-medium hover:bg-gray-100 transition"
+        >
+          Apply Now
+        </Link>
+
+      </section>
+
 
       {/* FOOTER */}
-      <footer className="footer">
-        © 2026 Maa Urmila International Public School
+      <footer className="bg-gray-900 text-gray-400 py-10 text-center text-sm">
+
+        © {new Date().getFullYear()} Maa Urmila International Public School.
+        All Rights Reserved.
+
       </footer>
 
-      {/* STYLES */}
-      <style jsx global>{`
-        body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          background: #f0f8ff;
-          color: #333;
-        }
-
-        .header {
-          background: #007bff;
-          color: #fff;
-          padding: 15px 25px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .homeLink {
-          color: #fff;
-          text-decoration: none;
-          font-weight: bold;
-        }
-
-        .hero {
-          background: #0d6efd;
-          color: #fff;
-          text-align: center;
-          padding: 70px 20px;
-        }
-
-        .hero h1 {
-          font-size: 2.6em;
-        }
-
-        .hero p {
-          font-size: 1.2em;
-        }
-
-        .section {
-          max-width: 1100px;
-          margin: 50px auto;
-          padding: 20px;
-        }
-
-        .title {
-          color: #007bff;
-          margin-bottom: 25px;
-          text-align: center;
-        }
-
-        .sportsGrid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-          gap: 25px;
-        }
-
-        .sportBox {
-          background: #fff;
-          padding: 25px;
-          border-radius: 16px;
-          text-align: center;
-          box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-          transition: 0.3s;
-        }
-
-        .sportBox:hover {
-          transform: translateY(-8px);
-        }
-
-        .sportBox img {
-          width: 80px;
-          height: 80px;
-          object-fit: contain;
-          margin-bottom: 15px;
-        }
-
-        .sportBox h3 {
-          color: #007bff;
-          margin-bottom: 8px;
-        }
-
-        .achievementsGrid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-          gap: 25px;
-        }
-
-        .achievementBox {
-          background: #3aa0c8;
-          color: #fff;
-          padding: 40px 20px;
-          border-radius: 20px;
-          text-align: center;
-          font-size: 1.1em;
-          font-weight: bold;
-          box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-          transition: 0.3s;
-        }
-
-        .achievementBox:hover {
-          transform: translateY(-8px);
-        }
-
-        .footer {
-          background: #222;
-          color: #aaa;
-          text-align: center;
-          padding: 15px;
-          margin-top: 60px;
-        }
-      `}</style>
-    </>
+    </main>
   );
 }

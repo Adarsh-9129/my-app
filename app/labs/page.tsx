@@ -74,7 +74,7 @@ export default function ScienceLabPage() {
 
         <div className="rounded-2xl overflow-hidden shadow-xl">
           <Image
-            src="/images/science-lab.jpg"
+            src="/image/lab.png"
             alt="School Science Laboratory"
             width={600}
             height={400}
