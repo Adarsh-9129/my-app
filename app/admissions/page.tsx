@@ -1,4 +1,62 @@
+'use client';
+
+import { useState } from 'react';
+
 export default function AdmissionPage() {
+  const [formData, setFormData] = useState({
+    studentName: '',
+    parentName: '',
+    email: '',
+    phone: '',
+    classApplying: '',
+    message: ''
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/admissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to submit enquiry');
+      }
+
+      setSubmitted(true);
+      setFormData({
+        studentName: '',
+        parentName: '',
+        email: '',
+        phone: '',
+        classApplying: '',
+        message: ''
+      });
+
+      // Reset success message after 3 seconds
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-blue-50 px-6 py-16">
       {/* Page Heading */}
@@ -19,7 +77,19 @@ export default function AdmissionPage() {
           Admission Enquiry Form
         </h2>
 
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {submitted && (
+          <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg">
+            ✓ Thank you! Your enquiry has been submitted successfully. We'll contact you soon.
+          </div>
+        )}
+
+        {error && (
+          <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-lg">
+            ✗ Error: {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Student Name */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
@@ -27,7 +97,11 @@ export default function AdmissionPage() {
             </label>
             <input
               type="text"
+              name="studentName"
+              value={formData.studentName}
+              onChange={handleChange}
               placeholder="Enter student name"
+              required
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
@@ -37,14 +111,20 @@ export default function AdmissionPage() {
             <label className="block text-gray-700 font-medium mb-2">
               Class Applying For
             </label>
-            <select className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option>Select Class</option>
-              <option>Nursery</option>
-              <option>LKG</option>
-              <option>UKG</option>
-              <option>Class I – V</option>
-              <option>Class VI – X</option>
-              <option>Class XI – XII</option>
+            <select
+              name="classApplying"
+              value={formData.classApplying}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              <option value="">Select Class</option>
+              <option value="Nursery">Nursery</option>
+              <option value="LKG">LKG</option>
+              <option value="UKG">UKG</option>
+              <option value="Class I – V">Class I – V</option>
+              <option value="Class VI – X">Class VI – X</option>
+              <option value="Class XI – XII">Class XI – XII</option>
             </select>
           </div>
 
@@ -55,7 +135,11 @@ export default function AdmissionPage() {
             </label>
             <input
               type="text"
+              name="parentName"
+              value={formData.parentName}
+              onChange={handleChange}
               placeholder="Enter parent name"
+              required
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
@@ -67,7 +151,11 @@ export default function AdmissionPage() {
             </label>
             <input
               type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
               placeholder="Enter mobile number"
+              required
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
@@ -79,7 +167,11 @@ export default function AdmissionPage() {
             </label>
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="Enter email address"
+              required
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
@@ -90,7 +182,10 @@ export default function AdmissionPage() {
               Message
             </label>
             <textarea
-              rows="4"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              rows={4}
               placeholder="Any specific query"
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
             ></textarea>
@@ -100,9 +195,14 @@ export default function AdmissionPage() {
           <div className="md:col-span-2 text-center">
             <button
               type="submit"
-              className="bg-blue-600 text-white px-10 py-3 rounded-full font-semibold hover:bg-blue-700 transition"
+              disabled={loading}
+              className={`px-10 py-3 rounded-full font-semibold transition ${
+                loading
+                  ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
             >
-              Submit Enquiry
+              {loading ? 'Submitting...' : 'Submit Enquiry'}
             </button>
           </div>
         </form>

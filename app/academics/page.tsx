@@ -15,20 +15,7 @@ export default function SchoolPage() {
         </p>
       </section>
 
-      {/* STICKY FUN NAV */}
-      <nav className="sticky top-0 z-40 bg-white/70 backdrop-blur-xl shadow-md">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-center gap-8 font-semibold">
-          {["Home","About","Classes","Teachers","Contact"].map(item=>(
-            <a
-              key={item}
-              href={`/${item.toLowerCase()}`}
-              className="hover:text-emerald-600 hover:scale-110 transition"
-            >
-              {item}
-            </a>
-          ))}
-        </div>
-      </nav>
+
 
       {/* WELCOME */}
       <section className="text-center py-20 px-6">
@@ -65,11 +52,11 @@ export default function SchoolPage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              ["🧸","Nursery – UKG"],
-              ["✏️","Class I – V"],
-              ["🧪","Class VI – VIII"],
-              ["🚀","Class IX – XII"],
-            ].map(([icon,cls],i)=>(
+              ["🧸", "Nursery – UKG"],
+              ["✏️", "Class I – V"],
+              ["🧪", "Class VI – VIII"],
+              ["🚀", "Class IX – XII"],
+            ].map(([icon, cls], i) => (
               <div
                 key={i}
                 className="group bg-gradient-to-br from-white to-emerald-50 rounded-3xl p-10 text-center shadow-xl hover:-rotate-2 hover:scale-105 transition duration-300"
@@ -89,11 +76,11 @@ export default function SchoolPage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {[
-              ["Mrs. Sukiriti Mala","English","5 Years"],
-              ["Mr. Nitin Kumar Mishra","Mathematics","3 Years"],
-              ["Ms. Sakshi Shukla","Science","2 Years"],
-              ["Mr. Ansh Singh","Social Science","5 Years"],
-            ].map(([name,sub,exp],i)=>(
+              ["Mrs. Sukiriti Mala", "English", "5 Years"],
+              ["Mr. Nitin Kumar Mishra", "Mathematics", "3 Years"],
+              ["Ms. Sakshi Shukla", "Science", "2 Years"],
+              ["Mr. Ansh Singh", "Social Science", "5 Years"],
+            ].map(([name, sub, exp], i) => (
               <div
                 key={i}
                 className="relative bg-gradient-to-br from-emerald-100 to-green-200 rounded-[30px] p-8 text-center shadow-2xl hover:-translate-y-4 hover:rotate-1 transition"

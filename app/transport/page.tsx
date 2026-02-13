@@ -67,7 +67,7 @@ export default function TransportPage() {
 
         <div className="rounded-2xl overflow-hidden shadow-xl">
           <Image
-            src="/images/school-bus.jpg"
+            src="/image/schoolbus.png"
             alt="School Bus"
             width={600}
             height={400}

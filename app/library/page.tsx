@@ -75,7 +75,7 @@ export default function LibraryPage() {
 
         <div className="rounded-2xl overflow-hidden shadow-xl">
           <Image
-            src="/images/library.jpg"
+            src="/image/library.png"
             alt="School Library"
             width={600}
             height={400}

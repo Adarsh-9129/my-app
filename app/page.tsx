@@ -12,6 +12,18 @@ const slides = [
 export default function Home() {
   const [active, setActive] = useState(0);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [reviewCount, setReviewCount] = useState(0);
+
+  useEffect(() => {
+    fetch("/api/review")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setReviewCount(data.data.length);
+        }
+      })
+      .catch((err) => console.error("Failed to fetch reviews count", err));
+  }, []);
 
   useEffect(() => {
     const i = setInterval(() => {
@@ -45,62 +57,61 @@ export default function Home() {
             </Link>
 
             {/* MODULES DROPDOWN */}
-<div className="relative">
+            <div className="relative">
 
-  <button onClick={() => toggleDropdown("modules")} className="hover:text-indigo-600 transition flex items-center gap-1">
-    Modules ▾
-  </button>
+              <button onClick={() => toggleDropdown("modules")} className="hover:text-indigo-600 transition flex items-center gap-1">
+                Modules ▾
+              </button>
 
-  <div
-    className={`absolute left-[-150px] top-10 bg-white shadow-xl rounded-xl p-6 w-[400px] gap-10 border ${
-      openDropdown === "modules" ? "flex" : "hidden"
-    }`}
-  >
+              <div
+                className={`absolute left-[-150px] top-10 bg-white shadow-xl rounded-xl p-6 w-[400px] gap-10 border ${openDropdown === "modules" ? "flex" : "hidden"
+                  }`}
+              >
 
-    {/* Column 1 */}
-    <div className="space-y-3 text-sm">
+                {/* Column 1 */}
+                <div className="space-y-3 text-sm">
 
-      <a href="/academics" className="block hover:text-indigo-600">
-        Academics
-      </a>
+                  <a href="/academics" className="block hover:text-indigo-600">
+                    Academics
+                  </a>
 
-      <a href="/sports" className="block hover:text-indigo-600">
-        Sports
-      </a>
+                  <a href="/sports" className="block hover:text-indigo-600">
+                    Sports
+                  </a>
 
-      <a href="/library" className="block hover:text-indigo-600">
-        Library
-      </a>
+                  <a href="/library" className="block hover:text-indigo-600">
+                    Library
+                  </a>
 
-      <a href="/labs" className="block hover:text-indigo-600">
-        Science Labs
-      </a>
+                  <a href="/labs" className="block hover:text-indigo-600">
+                    Science Labs
+                  </a>
 
-    </div>
+                </div>
 
-    {/* Column 2 */}
-    <div className="space-y-3 text-sm">
+                {/* Column 2 */}
+                <div className="space-y-3 text-sm">
 
-      <a href="/transport" className="block hover:text-indigo-600">
-        Transport
-      </a>
+                  <a href="/transport" className="block hover:text-indigo-600">
+                    Transport
+                  </a>
 
-      <a href="/smart-classes" className="block hover:text-indigo-600">
-        Smart Classes
-      </a>
+                  <a href="/smart-classes" className="block hover:text-indigo-600">
+                    Smart Classes
+                  </a>
 
-      <a href="/activities" className="block hover:text-indigo-600">
-        Activities
-      </a>
+                  <a href="/activities" className="block hover:text-indigo-600">
+                    Activities
+                  </a>
 
-      <a href="/hostel" className="block hover:text-indigo-600">
-        Hostel
-      </a>
+                  <a href="/hostel" className="block hover:text-indigo-600">
+                    Hostel
+                  </a>
 
-    </div>
+                </div>
 
-  </div>
-</div>
+              </div>
+            </div>
 
 
             {/* About Dropdown */}
@@ -112,9 +123,8 @@ export default function Home() {
 
               {/* Dropdown */}
               <div
-                className={`absolute left-[-200px] top-10 bg-white shadow-xl rounded-xl p-6 w-[500px] gap-12 border ${
-                  openDropdown === "about" ? "flex" : "hidden"
-                }`}
+                className={`absolute left-[-200px] top-10 bg-white shadow-xl rounded-xl p-6 w-[500px] gap-12 border ${openDropdown === "about" ? "flex" : "hidden"
+                  }`}
               >
 
                 {/* Column 1 */}
@@ -167,7 +177,7 @@ export default function Home() {
             <Link href="/demo" className="hover:text-indigo-600 transition">
               Request a Demo
             </Link>
-            
+
             {/* Apply */}
             <Link
               href="/admissions"
@@ -180,15 +190,97 @@ export default function Home() {
         </div>
       </header>
 
+      {/* SCHOOL INFO BANNER */}
+      <section className="relative mt-28 z-30 px-4">
+
+        <div className="max-w-6xl mx-auto bg-gradient-to-r from-indigo-50 via-sky-50 to-purple-50 
+                  rounded-3xl shadow-2xl flex flex-col md:flex-row 
+                  items-center gap-8 p-8 border border-indigo-100">
+
+          {/* Logo */}
+          <div className="relative">
+
+            <div className="p-1 bg-gradient-to-r from-indigo-500 via-sky-400 to-purple-500 rounded-full">
+
+              <img
+                src="/image/logoschool.jpeg"
+                alt="School Logo"
+                className="w-28 h-28 rounded-full bg-white p-1"
+              />
+
+            </div>
+
+            <span className="absolute -bottom-2 right-1 bg-green-500 text-white text-xs px-3 py-1 rounded-full shadow-md">
+              ✔ Verified
+            </span>
+
+          </div>
+
+
+          {/* Info */}
+          <div className="flex-1 text-center md:text-left">
+
+            <h2 className="text-2xl md:text-3xl font-extrabold text-indigo-800 leading-tight">
+
+              Maa Urmila International Public School
+
+            </h2>
+
+            <p className="mt-2 text-gray-600 text-sm flex items-center gap-2 justify-center md:justify-start">
+
+              📍 Lahrpur Road, Vill Patwara, Sitapur, Uttar Pradesh
+
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-3 justify-center md:justify-start">
+
+              <span className="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs rounded-full font-medium">
+                CBSE Pattern
+              </span>
+
+              <span className="px-3 py-1 bg-sky-100 text-sky-700 text-xs rounded-full font-medium">
+                Smart Classes
+              </span>
+
+              <span className="px-3 py-1 bg-purple-100 text-purple-700 text-xs rounded-full font-medium">
+                Safe Campus
+              </span>
+
+            </div>
+
+          </div>
+
+
+          {/* Review Box */}
+          <Link href="/review">
+            <div className="bg-gradient-to-br from-orange-400 to-pink-500 
+                      text-white px-7 py-5 rounded-2xl 
+                      text-center shadow-xl min-w-[120px] cursor-pointer hover:scale-110 transition-transform">
+
+              <div className="text-4xl font-extrabold">
+                {reviewCount}
+              </div>
+
+              <p className="text-sm opacity-90 mt-1">
+                Reviews
+              </p>
+
+            </div>
+          </Link>
+
+        </div>
+
+      </section>
+
+
       {/* HERO */}
       <section className="relative h-screen flex items-center justify-center">
 
         {slides.map((img, i) => (
           <div
             key={i}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              i === active ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${i === active ? "opacity-100" : "opacity-0"
+              }`}
             style={{
               backgroundImage: `url(${img})`,
               backgroundSize: "cover",
@@ -201,11 +293,7 @@ export default function Home() {
 
         <div className="relative z-10 text-center text-white px-6 max-w-3xl">
 
-          <img
-            src="/image/ChatGPT Image Jan 6, 2026, 05_19_20 PM.png"
-            className="mx-auto w-32 drop-shadow-2xl"
-            alt="Logo"
-          />
+
 
           <h1 className="mt-6 text-4xl md:text-6xl font-extrabold leading-tight">
             Shaping <span className="text-sky-400">Future Leaders</span>
@@ -217,6 +305,7 @@ export default function Home() {
 
         </div>
       </section>
+
 
 
       {/* STATS */}
@@ -296,36 +385,39 @@ export default function Home() {
 
       </section>
 
-
       {/* FEATURES */}
-      <section className="py-24 max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
+      <section className="py-24 max-w-7xl mx-auto px-6 grid sm:grid-cols-2 md:grid-cols-4 gap-10">
 
         {[
           ["🎓", "Academics", "CBSE-based quality education", "/academics"],
           ["👨‍🏫", "Faculty Info", "Meet our expert teachers", "/faculty-info"],
           ["⚽", "Sports", "Encouraging physical activity", "/sports"],
+          ["🤝", "Community", "Building strong relationship between students, parents and teachers", "/community"],
         ].map(([icon, title, desc, link], i) => (
 
-          <Link href={link} key={i}>
+          <div
+            key={i}
+            className="bg-white rounded-2xl shadow-lg p-8 text-center
+                 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+          >
+            <div className="text-4xl mb-4">{icon}</div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-indigo-500 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+            <h3 className="text-xl font-semibold text-indigo-700 mb-2">
+              {title}
+            </h3>
 
-              <div className="text-5xl">
-                {icon}
-              </div>
+            <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+              {desc}
+            </p>
 
-              <h3 className="mt-6 text-2xl font-bold">
-                {title}
-              </h3>
+            <a
+              href={link}
+              className="text-indigo-600 font-medium hover:underline"
+            >
+              Learn More →
+            </a>
 
-              <p className="mt-4 text-slate-600">
-                {desc}
-              </p>
-
-            </div>
-
-          </Link>
-
+          </div>
         ))}
 
       </section>
